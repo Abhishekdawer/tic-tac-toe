@@ -3,9 +3,10 @@ using namespace std;
 
 char board[3][3] = {{'1','2','3'},{'4','5','6'},{'7','8','9'}};
  int choice;   // number input for box
- char turn='X';
- int row,col;
- void board_display()
+ char turn='X'; // for which turn's player
+ int row,col;  // 
+ bool draw = false;
+ void board_display()   // function to disply the game board
  {
  	system("cls");
  	cout<<"   TIC TAC TOE"<<endl;
@@ -21,7 +22,7 @@ char board[3][3] = {{'1','2','3'},{'4','5','6'},{'7','8','9'}};
   cout<<"\t\t     |     |     "<<endl;	
  }
  
-  void turns()
+  void turns()    // function for turns
   {
   	if(turn =='X')
   cout<<endl<<"\n\t Player1 [X] turn:";
@@ -67,12 +68,46 @@ char board[3][3] = {{'1','2','3'},{'4','5','6'},{'7','8','9'}};
 	 	turns();
 	 }
 	  board_display();
+}
+	  bool gameend()    //function for game over
+	  {
+	  	for(int i=0;i<3;i++)
+	  	{
+	  	 if(board[i][0] == board[i][1] && board[i][0] == board[i][2] || board[0][i] == board[1][i] && board[0][i] == board[2][i] )
+		   return false;
+		   
+		 if(board[0][0] == board[1][1] && board[0][0] == board[2][2] || board[0][2] == board[1][1] && board[2][0] == board[0][2])
+		 return false;	
+	   }
+	   
+	   for(int i=0;i<3;i++)
+	   	for(int j=0;j<3;j++)
+	   	if(board[i][j] !='X' && board[i][j] !='O')
+		   return true;	
+		   
+		   
+			draw = true;
+			return false;
+		
   }
 int main()
  {
-  while(true) {
+  while(gameend()) {
   board_display();
   turns();
- 
+  gameend();
   }
+  
+   if(turn=='X' && draw == false)
+   {
+   	cout<<"Player2 [O} wins! congrats\n";
+   }
+   else if(turn=='O' && draw == false)
+   {
+    cout<<"Player1 [X} wins! congrats\n";
+   }
+   else 
+   {
+   	cout<<"game draw!!";
+   }
 }
